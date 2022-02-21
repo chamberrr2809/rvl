@@ -4,6 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import Notification from '../components/Notification';
 import { auth } from '../firebase';
+import Copyright from '../components/Footer'
 
 export default function Landing() {
   const [user, loading, error] = useAuthState(auth);
@@ -115,6 +116,7 @@ export default function Landing() {
           />
         </Flex>
       </Stack>
+      <Copyright />
     </>
   );
 }

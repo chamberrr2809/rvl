@@ -12,6 +12,8 @@ import {
   ListIcon,
   Button,
 } from '@chakra-ui/react';
+import Copyright from '../components/Footer'
+
 import { FaCheckCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Notification from '../components/Notification';
@@ -145,6 +147,7 @@ export default function Plans() {
           </PriceWrapper>
         </Stack>
       </Box>
+      <Copyright />
     </>
   );
 }

@@ -42,6 +42,8 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import uniqid from 'uniqid';
+import Copyright from '../components/Footer'
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import { WarningTwoIcon } from '@chakra-ui/icons';
@@ -275,6 +277,7 @@ export default function Home() {
             </Modal>
           </VStack>
         </Flex>
+        <Copyright />
       </>
     );
   }

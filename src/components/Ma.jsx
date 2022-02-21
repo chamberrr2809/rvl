@@ -7,9 +7,13 @@ import {
   useColorModeValue,
   Link,
   Text,
+  useToast,
+  IconButton,
 } from '@chakra-ui/react';
+import { MdContentCopy } from 'react-icons/md';
 
 const Ma = props => {
+  const toast = useToast();
   return (
     <Flex p={3} w="full" alignItems="center" justifyContent="center">
       <Box
@@ -58,6 +62,32 @@ const Ma = props => {
             >
               Anonymous
             </Link>
+          </Flex>
+          <Flex
+            justifyContent="flex-start"
+            ml="4"
+            size="lg"
+            alignItems="flex-end"
+          >
+            <IconButton
+              icon={<MdContentCopy />}
+              onClick={async () => {
+                await navigator.clipboard
+                  .writeText(props.message)
+                  .then(result => {
+                    toast({
+                      title: 'Pesan disalin',
+                      description: 'Pesan yang kamu pilih sudah tersalin',
+                      status: 'success',
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                  })
+                  .catch(error => {
+                    alert(error);
+                  });
+              }}
+            />
           </Flex>
         </Flex>
       </Box>

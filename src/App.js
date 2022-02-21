@@ -7,6 +7,7 @@ import Plans from './views/Plans';
 import Single from './views/Single';
 import NotFound from './views/NotFound';
 import React from 'react';
+import Manage from './views/Manage';
 
 const RedirectHandler = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/app/:id" element={<Single />} />
+        <Route path="/app/:id/manage" element={<Manage />} />
         <Route path="/lost" element={<NotFound />} />
         <Route path="*" element={<RedirectHandler />} />
       </Routes>

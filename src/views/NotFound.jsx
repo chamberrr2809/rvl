@@ -1,5 +1,6 @@
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import Copyright from '../components/Footer';
 
 export default function NotFound() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function NotFound() {
       >
         Kembali
       </Button>
+      <Copyright />
     </Box>
   );
 }

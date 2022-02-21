@@ -24,6 +24,8 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
+import Copyright from '../components/Footer';
+
 import moment from 'moment';
 import {
   collection,
@@ -34,8 +36,6 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import React from 'react';
-import Copyright from '../components/Footer';
-
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useParams, useNavigate } from 'react-router-dom';
 import db from '../firebase';
@@ -50,7 +50,7 @@ const breakpoints = createBreakpoints({
   '2xl': '96em',
 });
 
-const Single = () => {
+const Manage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [notFound, setNotFound] = React.useState(false);
@@ -91,7 +91,7 @@ const Single = () => {
   );
 };
 
-export default Single;
+export default Manage;
 
 function makeid(length) {
   var result = '';
@@ -181,109 +181,27 @@ const Found = props => {
                 textAlign="center"
                 fontWeight="bold"
               >
-                Berikan pesan rahasia untuk {props.doc.data().name}
+                Kelola Rvl untuk {props.doc.data().name}
               </Text>
-              <Input
-                variant="filled"
-                placeholder="Pesan"
-                width="full"
-                value={message}
-                onChange={e => {
-                  setMessage(e.target.value);
-                }}
-                size="lg"
-                mb="2"
-              />
-              <Button
-                isLoading={loading}
-                onClick={sendMessage}
-                colorScheme="teal"
-                size="lg"
-              >
-                Kirim
-              </Button>
-              <Alert status="info">
-                <AlertIcon />
-                {props.doc.data().name} tidak akan pernah mengetahui siapa yang
-                mengirim pesan ini.
-              </Alert>
             </VStack>
           </Box>
+          <Text fontSize="xl" textAlign="center" fontWeight="bold">
+            {props.doc.data().allowInspect
+              ? 'Kamu memperbolehkan pengguna lain melihat pesan yang sudah ada'
+              : 'Kamu tidak memperbolehkan pengguna lain melihat pesan yang sudah ada'}
+          </Text>
           <VStack
             mt="5"
             spacing="1"
             bg={useColorModeValue('#F9FAFB', 'gray.600')}
           >
-            <Text fontSize="xl" textAlign="center" fontWeight="bold">
-              {props.doc.data().allowInspect
-                ? 'Pesan'
-                : `${
-                    props.doc.data().name
-                  } tidak memperbolehkan kamu untuk melihat pesan dari pengguna lain. Rvl akan menjaganya`}
+            <Text fontSize="3xl" textAlign="center" fontWeight="bold">
+              Pesan
             </Text>
             <Comments />
           </VStack>
         </VStack>
       </Flex>
-      <AlertDialog
-        isOpen={isAlertOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onAlertClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Pesan terkirim
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              Pesanmu sudah dikirimkan ke {props.doc.data().name}. Jangan
-              beritahu dia kalau kamu yang mengirimnya!
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button
-                ref={cancelRef}
-                onClick={() => {
-                  window.location.href = '/app';
-                }}
-              >
-                Baiklah!
-              </Button>
-              <Button colorScheme="teal" onClick={onOpen} ml={3}>
-                Kirim Pesan Lain
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-      <Modal size="lg" isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Kirim Pesan Lain</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text fontSize="2xl">
-              Kirimkan pesan lain untuk {props.doc.data().name}
-            </Text>
-            <Input
-              placeholder="Pesan"
-              value={anotherMessage}
-              onChange={e => setAnotherMessage(e.target.value)}
-            />
-          </ModalBody>
-
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
-              Tutup
-            </Button>
-            <Button colorScheme="blue" onClick={resendHandler}>
-              Kirim
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-      <Copyright />
     </>
   );
 };
@@ -309,6 +227,7 @@ function Comments() {
           </span>
         )}
       </p>
+      <Copyright />
     </div>
   );
 }

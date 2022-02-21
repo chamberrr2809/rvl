@@ -3,13 +3,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const app = initializeApp({
-  apiKey: 'AIzaSyCrNBDu3UeRZT5lLKQjGehrn2-gAk3OWSA',
-  authDomain: 'rvl-backend.firebaseapp.com',
-  projectId: 'rvl-backend',
-  storageBucket: 'rvl-backend.appspot.com',
-  messagingSenderId: '1015482285243',
-  appId: '1:1015482285243:web:b8d27cb88c1456e426fd9e',
-  measurementId: 'G-9WD9YLMVBY',
+  apiKey: "AIzaSyCInJPJ1_yPxbpwNubd55LA0XRa41ltFGc",
+  authDomain: "rvl-project-7c1f2.firebaseapp.com",
+  projectId: "rvl-project-7c1f2",
+  storageBucket: "rvl-project-7c1f2.appspot.com",
+  messagingSenderId: "473593978945",
+  appId: "1:473593978945:web:402d52a79516d69a5ca6c0",
+  measurementId: "G-7WQX6PQFLW"
 });
 
 const db = getFirestore(app);

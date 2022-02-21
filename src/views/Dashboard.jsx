@@ -10,6 +10,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import Copyright from '../components/Footer';
 import { collection, query, where } from 'firebase/firestore';
 import React from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -53,9 +54,11 @@ const Dashboard = () => {
                           <Button
                             colorScheme="blue"
                             onClick={() => {
-                              navigate(`/app/${doc.data().id}/view`);
+                              navigate(`/app/${doc.data().id}/manage`);
                             }}
-                          ></Button>
+                          >
+                            Kelola
+                          </Button>
                         </Td>
                       </Tr>
                     </React.Fragment>
@@ -63,6 +66,7 @@ const Dashboard = () => {
                 </Tbody>
               </Table>
             </Flex>
+            <Copyright />
           </>
         )}
       </p>
