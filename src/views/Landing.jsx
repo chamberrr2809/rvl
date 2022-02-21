@@ -1,16 +1,8 @@
-import {
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import Notification from '../components/Notification';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 
 export default function Landing() {
@@ -59,10 +51,7 @@ export default function Landing() {
               >
                 Rvl
               </Text>
-              <br />{' '}
-              <Text color={'blue.400'} as={'span'}>
-                Secreto, Didesain ulang. Bahkan lebih baik
-              </Text>{' '}
+              <br /> <Text color={'blue.400'} as={'span'}></Text>{' '}
             </Heading>
             <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
               Dapatkan pesan dari temanmu. Tanpa identitas. Dengan menekan Mulai

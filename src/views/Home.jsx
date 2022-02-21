@@ -8,6 +8,7 @@ import {
   Popover,
   IconButton,
   PopoverTrigger,
+  Checkbox,
   PopoverContent,
   PopoverHeader,
   PopoverBody,
@@ -35,7 +36,8 @@ import { RiLineLine } from 'react-icons/ri';
 import { MdOutlineMoreHoriz } from 'react-icons/md';
 import db from '../firebase';
 import moment from 'moment';
-import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import Cta from '../components/Cta';
+import { doc, setDoc, Timestamp, getDoc } from 'firebase/firestore';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -59,12 +61,14 @@ const loginHandler = () => {
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  const [inputId, setInputid] = React.useState('');
   const crtAt = moment().format('MMMM Do YYYY, h:mm:ss a');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-
+  const [validId, setValidid] = React.useState(true);
+  const [checked, setChecked] = React.useState(true);
   const [nama, setNama] = React.useState('');
-  const id = uniqid();
+  const [id, setId] = React.useState(uniqid());
   const [load, setLoad] = React.useState(false);
   const handleClick = async () => {
     if (nama === '') {
@@ -76,6 +80,7 @@ export default function Home() {
         dateCreated: crtAt,
         id: id,
         userId: auth.currentUser.uid,
+        allowInspect: checked,
       });
       setLoad(false);
       onOpen();
@@ -102,6 +107,13 @@ export default function Home() {
       console.error(err);
     }
   };
+  const idHandler = e => {
+    setInputid(e.target.value);
+    if (setInputid.length === 8) {
+      setValidid(false);
+    }
+  };
+
   if (loading) {
     return (
       <div>
@@ -139,6 +151,16 @@ export default function Home() {
               onChange={e => setNama(e.target.value)}
               placeholder="Nama"
             />
+            <Checkbox
+              size="lg"
+              colorScheme="teal"
+              isChecked={checked}
+              onChange={() => {
+                checked ? setChecked(false) : setChecked(true);
+              }}
+            >
+              Bolehkan pengguna lain melihat pesan yang sudah ada
+            </Checkbox>
             <Button
               isLoading={load}
               size="lg"
@@ -147,6 +169,12 @@ export default function Home() {
               onClick={handleClick}
             >
               Buat
+            </Button>
+            <Text textAlign="center" fontSize="xl">
+              Ingin mengelola link yang sudah dibuat?
+            </Text>
+            <Button colorScheme="teal" onClick={() => navigate('/dashboard')}>
+              Dashboard
             </Button>
             <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
@@ -160,6 +188,11 @@ export default function Home() {
                     Link: {`${window.location.href}/${id}`}
                   </Text>
                   <Text fontSize="xl">ID: {id}</Text>
+                  <Text fontSize="xl">
+                    {checked
+                      ? 'Pengguna lain dibolehkan untuk melihat pesan yang sudah ada'
+                      : 'Pengguna lain tidak dapat melihat pesan yang sudah ada'}
+                  </Text>
                 </ModalBody>
 
                 <ModalFooter>

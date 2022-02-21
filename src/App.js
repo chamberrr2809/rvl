@@ -1,24 +1,28 @@
-import Landing from './views/Landing';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Dashboard from './views/Dashboard';
-import { Routes, Route } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react';
 import Home from './views/Home';
-import { extendTheme } from '@chakra-ui/react';
-import { createBreakpoints } from '@chakra-ui/theme-tools';
+import Landing from './views/Landing';
 import Plans from './views/Plans';
 import Single from './views/Single';
+import NotFound from './views/NotFound';
+import React from 'react';
 
+const RedirectHandler = () => {
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    navigate('/lost');
+  }, []);
+  return <h3>Nothing</h3>;
+};
 // 2. Update the breakpoints as key-value pairs
-const breakpoints = createBreakpoints({
-  sm: '320px',
-  md: '768px',
-  lg: '960px',
-  xl: '1200px',
-  '2xl': '1536px',
-});
+const config = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+};
 
 // 3. Extend the theme
-const theme = extendTheme({ breakpoints });
+const theme = extendTheme({ config });
 
 export default function App() {
   return (
@@ -29,6 +33,8 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/app/:id" element={<Single />} />
+        <Route path="/lost" element={<NotFound />} />
+        <Route path="*" element={<RedirectHandler />} />
       </Routes>
     </ChakraProvider>
   );

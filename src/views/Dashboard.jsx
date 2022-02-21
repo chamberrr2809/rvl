@@ -1,35 +1,26 @@
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import db, { auth } from '../firebase';
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Text,
-  Td,
-  TableCaption,
-  Flex,
   Button,
+  Flex,
+  Table,
+  TableCaption,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { collection, query, where } from 'firebase/firestore';
 import React from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useNavigate } from 'react-router-dom';
+import db, { auth } from '../firebase';
 
 const Dashboard = () => {
-  const [snapshot, setSnapshot] = React.useState({});
-  React.useEffect(async () => {
-    const q = query(
-      collection(db, 'index'),
-      where('userId', '==', auth.currentUser.uid)
-    );
-    const querySnapshot = await getDocs(q);
-    setSnapshot(querySnapshot);
-  }, []);
-
   const navigate = useNavigate();
-  const [value, loading, error] = useCollection(snapshot);
+  const [value, loading, error] = useCollection(
+    query(collection(db, 'index'), where('userId', '==', auth.currentUser.uid))
+  );
   return (
     <div>
       <p>
@@ -38,7 +29,7 @@ const Dashboard = () => {
         {value && (
           <>
             <Text fontSize="3xl" align="center" fontWeight="bold">
-              Selamat Datang!
+              Selamat Datang, {auth.currentUser.displayName}!
             </Text>
             <Flex flexWrap="wrap" justifyContent="center" alignItems="center">
               <Table variant="simple" mt="10" maxWidth="90%">
